@@ -26,4 +26,15 @@ class ApiService {
     final data = json.decode(response.body);
     return List<Map<String, dynamic>>.from(data['results']);
   }
+
+  Future<List<Map<String, dynamic>>> searchMovies(String query) async {
+    final response = await http.get(Uri.parse('$baseUrl/search/movie?api_key=$apiKey&query=$query'));
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      return List<Map<String, dynamic>>.from(data['results']);
+    } else {
+      throw Exception('Failed to load movies');
+    }
+  }
 }
